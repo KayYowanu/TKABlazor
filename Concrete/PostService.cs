@@ -36,7 +36,7 @@ namespace TKABlazor.Concrete
 
         public Task<int> DeletePost(int id)
         {
-            var deletepost = Task.FromResult(_postrepo.ExecutePost($"Delete [TKAPosts] where PostId = {id}", null,
+            var deletepost = Task.FromResult(_postrepo.ExecutePost($"Delete from [TKAPosts] where PostId = {id}", null,
                     commandType: CommandType.Text));
             return deletepost;
         }
@@ -58,10 +58,10 @@ namespace TKABlazor.Concrete
         public Task<int> UpdatePost(TKAPosts tkapost)
         {
             var dbPara = new DynamicParameters();
-            dbPara.Add("Id", tkapost.PostId);
+            dbPara.Add("PostId", tkapost.PostId);
             dbPara.Add("Title", tkapost.Title, DbType.String);
-
-            var updatepost = Task.FromResult(_postrepo.UpdatePost<int>("[dbo].[SP_Update_TKAPosts]",
+            dbPara.Add("Description", tkapost.Description, DbType.String);
+            var updatepost = Task.FromResult(_postrepo.UpdatePost<int>("[dbo].[Update_Post]",
                             dbPara,
                             commandType: CommandType.StoredProcedure));
             return updatepost;

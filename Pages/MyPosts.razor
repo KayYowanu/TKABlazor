@@ -1,4 +1,4 @@
-﻿@page "/postlist"
+﻿@page "/myposts"
 @inject IPostService postService
 
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -32,12 +32,12 @@
         display: block;
         display: -webkit-box;
         overflow: hidden !important;
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 5;
     }
 </style>
 
 <div>
-    <a class="btn btn-success float-right" href='/myposts'>View my Posts</a>
+    <a class="btn btn-success float-right" href='/AddPost'>Add Post</a>
 </div>
 <br />
 
@@ -61,7 +61,8 @@ else
            <div class="card-body">
                <h5 class="card-title">@tka.Title</h5>
                <p>
-                   <div class="card-text truncate">@tka.Description</div><a class="btn btn-primary" Text="Read more" href='/postDetails/@tka.PostId'>Read more...</a>
+                   <div class="card-text truncate">@tka.Description</div><a class="btn btn-primary" Text="Read more" href='/editPost/@tka.PostId'>Read more...</a>
+                   <a class="btn btn-danger" @onclick="() => DeletePost(tka.PostId)">Delete</a>
                </p>
            </div>
                }
@@ -185,6 +186,7 @@ else
         this.StateHasChanged();
     }
 
+    /*FOR PAGE SIZING AND PAGNATIONS*/
     public void SetPagerSize(string direction)
     {
         if (direction == "forward" && endPage < totalPages)

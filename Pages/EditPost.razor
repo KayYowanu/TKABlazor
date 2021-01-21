@@ -1,0 +1,45 @@
+﻿@page "/editPost/{PostId}"
+@inject IPostService postService
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+                <label for="Name" class="control-label">Name: </label>
+                <input for="Name" class="form-control" @bind-value="@postEntity.Title" />
+                <label for="Name" class="control-label">: Description</label>
+                <input for="Name" class="form-control" @bind-value="@postEntity.Description" />
+                <input type="hidden" @bind-value="@postEntity.PostId" />
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" @onclick="() => UpdatePost()">Save</button>
+                <button type="button" class="btn btn-danger" @onclick="() => cancel()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string PostId { get; set; }
+
+    TKAPosts postEntity = new TKAPosts();
+
+    protected override async Task OnInitializedAsync()
+    {
+        postEntity = await postService.GetPostById(Convert.ToInt32(PostId));
+    }
+
+    protected async Task UpdatePost()
+    {
+        await postService.UpdatePost(postEntity);
+        navigationManager.NavigateTo("/myposts");
+    }
+
+    void cancel()
+    {
+        navigationManager.NavigateTo("/myposts");
+    }
+}

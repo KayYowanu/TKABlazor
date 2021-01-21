@@ -1,0 +1,15 @@
+﻿CREATE PROCEDURE [dbo].[Update_Post] 
+		@PostId INT,   
+		@Title NVARCHAR(250),
+	    @Description TEXT
+	    /*@Username NVARCHAR(250),
+	    @ModifiedOn DATETIME, 
+	    @PostPublished NVARCHAR(5),
+	    @PostApproved NVARCHAR(5),
+	    @IsDeleted NVARCHAR(5)*/
+	AS    
+		BEGIN    
+
+		UPDATE [TKAPosts] SET Title = @Title, Description = @Description, ModifiedOn = SYSDATETIME() WHERE PostId = @PostId 
+	           
+		END;

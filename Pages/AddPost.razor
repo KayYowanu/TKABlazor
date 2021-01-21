@@ -31,11 +31,11 @@
     protected async Task CreatePost()
     {
         await postService.CreatePost(tkaposts);
-        navigationManager.NavigateTo("/postlist");
+        navigationManager.NavigateTo("/myposts");
     }
 
     void cancel()
     {
-        navigationManager.NavigateTo("/postlist");
+        navigationManager.NavigateTo("/myposts");
     }
 }
