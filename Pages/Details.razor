@@ -5,12 +5,11 @@
 
 
 <div class="card-body">
-    <h5 class="card-title">@postEntity.Title</h5><br />
+    <h5 class="card-title">@postEntity.Title</h5>
+    <p>@postEntity.Username on <small class="card-title  text-muted">@postEntity.CreatedOn</small></p><br/>
     <p>
         <div class="card-text">@postEntity.Description</div>
     </p>
-    <p class="card-title">@postEntity.CreatedOn</p>
-    <p class="card-title">@postEntity.Username</p>
     <br />
     <br />
     <button type="button" class="btn btn-danger" @onclick="() => cancel()">Cancel</button>

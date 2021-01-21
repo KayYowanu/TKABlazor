@@ -4,13 +4,13 @@
 
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form>
             <div class="form-group">
-                <label for="Name" class="control-label">Name: </label>
-                <input for="Name" class="form-control" @bind-value="@postEntity.Title" />
-                <label for="Name" class="control-label">: Description</label>
-                <input for="Name" class="form-control" @bind-value="@postEntity.Description" />
+                <input for="Name" class="form-control" placeholder="Write the Title here...."  @bind-value="@postEntity.Title" />
+                <br/>
+                <br/>
+                <textarea for="Name" class="form-control" rows="7" cols="65" placeholder="Write the Description here...." @bind=@postEntity.Description></textarea>
                 <input type="hidden" @bind-value="@postEntity.PostId" />
             </div>
             <div class="form-group">
