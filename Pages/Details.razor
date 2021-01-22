@@ -12,7 +12,19 @@
     </p>
     <br />
     <br />
-    <button type="button" class="btn btn-danger" @onclick="() => cancel()">Cancel</button>
+   
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <form>
+            <textarea class="control-label" rows="7" cols="65" placeholder="Write the Description here...." @bind=@tkaposts.Comment></textarea>
+            <br />
+            <br />
+            <button type="button" class="btn btn-primary" @onclick="() => CreateComment()">Save Comment</button>
+            <button type="button" class="btn btn-danger" @onclick="() => cancel()">Cancel</button>
+
+        </form>
+    </div>
 </div>
 
     @code {
@@ -26,8 +38,17 @@
             postEntity = await postService.GetPostById(Convert.ToInt32(PostId));
         }
 
+
+        TKAComments tkaposts = new TKAComments();
+        
+        protected async Task CreateComment()
+        {
+            await postService.CreateComment(tkaposts, postEntity);
+            navigationManager.NavigateTo("/myposts");
+        }
+
         void cancel()
         {
-            navigationManager.NavigateTo("/postlist");
+            navigationManager.NavigateTo("/myposts");
         }
     }

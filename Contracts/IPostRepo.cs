@@ -14,5 +14,12 @@ namespace TKABlazor.Contracts
         int ExecutePost(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
         T InsertPost<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
         T UpdatePost<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+
+        /*FOR COMMENT IMPLEMENTATION*/
+        T GetComment<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+        List<T> GetAllComments<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+        int ExecuteComment(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+        T InsertComment<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+        T UpdateComment<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
     }
 }
