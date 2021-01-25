@@ -2,53 +2,85 @@
 @inject IPostService postService
 @inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
 
-
+<style>
+    
+</style>
+<header>
+</header>
 
 <div class="card-body">
     <h5 class="card-title">@postEntity.Title</h5>
-    <p>@postEntity.Username on <small class="card-title  text-muted">@postEntity.CreatedOn</small></p><br/>
+    <p>@postEntity.Username on <small class="card-title  text-muted">@postEntity.CreatedOn</small></p><br />
     <p>
         <div class="card-text">@postEntity.Description</div>
     </p>
     <br />
-    <br />
-   
+
 </div>
 <div class="row">
-    <div class="col-md-6">
-        <form>
-            <textarea class="control-label" rows="7" cols="65" placeholder="Write the Description here...." @bind=@tkaposts.Comment></textarea>
-            <br />
-            <br />
-            <button type="button" class="btn btn-primary" @onclick="() => CreateComment()">Save Comment</button>
-            <button type="button" class="btn btn-danger" @onclick="() => cancel()">Cancel</button>
-
-        </form>
+    <div class="col-md-12">
+        <textarea class="control-label" rows="5" cols="65" placeholder="Write your comment here...." @bind=@tkaposts.Comment></textarea>
     </div>
-</div>
+</div><br/>
+<button type="button" class="btn btn-primary float-right" @onclick="() => CreateComment()">Save Comment</button>
+<button type="button" class="btn btn-danger float-right" @onclick="() => cancel()">Cancel</button>
 
-    @code {
-        [Parameter]
-        public string PostId { get; set; }
+<div class="comment-reply-section">
 
-        TKAPosts postEntity = new TKAPosts();
-
-        protected override async Task OnInitializedAsync()
-        {
-            postEntity = await postService.GetPostById(Convert.ToInt32(PostId));
-        }
-
-
-        TKAComments tkaposts = new TKAComments();
-        
-        protected async Task CreateComment()
-        {
-            await postService.CreateComment(tkaposts, postEntity);
-            navigationManager.NavigateTo("/myposts");
-        }
-
-        void cancel()
-        {
-            navigationManager.NavigateTo("/myposts");
-        }
+    @if (commentModel == null || commentModel.Count == 0)
+    {
+        <p>There are no comments for this post</p>
     }
+    else
+    {
+
+        @foreach (var tka in commentModel)
+        {
+            <div class="comment-count text-muted">
+                <p>commentModel.Count comments</p>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@tka.Comment</h5>
+                    <p>
+                        <a class="btn btn-secondary float-right" Text="Read more" href='/postDetails/@tka.PostId'>Reply</a>
+                    </p>
+                </div>
+                }
+
+                }
+            </div>
+<button type="button" class="btn btn-danger" @onclick="() => cancel()">Back</button>
+
+@code {
+
+    [Parameter]
+    public string PostId { get; set; }
+
+    TKAPosts postEntity = new TKAPosts();
+
+    protected override async Task OnInitializedAsync()
+    {
+        postEntity = await postService.GetPostById(Convert.ToInt32(PostId));
+        commentModel = await postService.ListAllComments();
+    }
+
+    /*for retrieving comments*/
+    List<TKAComments> commentModel;
+    TKAComments commentEntity = new TKAComments();
+  
+
+    TKAComments tkaposts = new TKAComments();
+
+    protected async Task CreateComment()
+    {
+        await postService.CreateComment(tkaposts, postEntity);
+        navigationManager.NavigateTo("/myposts");
+    }
+
+
+
+    void cancel()
+    {
+        navigationManager.NavigateTo("/myposts");
+    }
+}

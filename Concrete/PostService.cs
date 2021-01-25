@@ -95,15 +95,15 @@ namespace TKABlazor.Concrete
 
         public Task<int> CountComment(string search)
         {
-            var tcount = Task.FromResult(_postrepo.GetPost<int>($"select COUNT(*) from [TKAComments] WHERE Title like '%{search}%'", null,
+            var tcount = Task.FromResult(_postrepo.GetComment<int>($"select COUNT(*) from [TKAComments] WHERE Comment like '%{search}%'", null,
                     commandType: CommandType.Text));
             return tcount;
         }
 
-        public Task<List<TKAComments>> ListAllComments(int skip, int take, string orderBy, string direction = "DESC", string search = "")
+        public Task<List<TKAComments>> ListAllComments()
         {
             var comments = Task.FromResult(_postrepo.GetAllComments<TKAComments>
-                ($"SELECT * FROM [TKAComments] WHERE Comment like '%{search}%' ORDER BY {orderBy} {direction} OFFSET {skip} ROWS FETCH NEXT {take} ROWS ONLY; ", null, commandType: CommandType.Text));
+                ($"SELECT * FROM [TKAComments]  ", null, commandType: CommandType.Text));
             return comments;
         }
 

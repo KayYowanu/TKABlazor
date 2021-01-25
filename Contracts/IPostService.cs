@@ -19,6 +19,6 @@ namespace TKABlazor.Contracts
         Task<int> CountComment(string search);
         Task<int> UpdateComment(TKAComments tkacomments);
         Task<TKAComments> GetCommentById(int Id);
-        Task<List<TKAComments>> ListAllComments(int skip, int take, string orderBy, string direction, string search);
+        Task<List<TKAComments>> ListAllComments();
     }
 }

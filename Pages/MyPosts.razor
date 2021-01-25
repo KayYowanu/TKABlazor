@@ -1,5 +1,6 @@
 ﻿@page "/myposts"
 @inject IPostService postService
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
 
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -21,6 +22,7 @@
         border: 2px solid #000;
         margin: 0px 5px 0px 5px;
     }
+
     .truncate {
         font-size: 15px;
         width: 100%;
@@ -43,31 +45,34 @@
 
 @if (postModel == null)
 {
-<button class="btn btn-primary" disabled>
-    <span class="spinner-border spinner-border-sm"></span>
-    Loading..
-</button>
+    <button class="btn btn-primary" disabled>
+        <span class="spinner-border spinner-border-sm"></span>
+        Loading..
+    </button>
 }
 else
 {
-            @if (postModel == null || postModel.Count == 0)
-            {
-                <p>There are no posts available</p>
-            }
-            else
-            {
-            
-               @foreach (var tka in postModel) { 
-           <div class="card-body">
-               <h5 class="card-title">@tka.Title</h5>
-               <p>
-                   <div class="card-text truncate">@tka.Description</div><a class="btn btn-primary" Text="Read more" href='/editPost/@tka.PostId'>Read more...</a>
-                   <a class="btn btn-danger" @onclick="() => DeletePost(tka.PostId)">Delete</a>
-               </p>
-           </div>
-               }
-        
-            }
+    @if (postModel == null || postModel.Count == 0)
+    {
+        <p>There are no posts available</p>
+    }
+    else
+    {
+
+        @foreach (var tka in postModel)
+        {
+            <div class="card-body">
+                <h5 class="card-title">@tka.Title</h5>
+                <p>
+                    <div class="card-text truncate">@tka.Description</div><a class="btn btn-primary" Text="Read more" href='/editPost/@tka.PostId'>Edit</a>
+                    <a class="btn btn-danger" @onclick="() => DeletePost(tka.PostId)">Delete</a>
+                </p>
+            </div>
+        }
+
+    }
+    <button type="button" class="btn btn-danger float-right" @onclick="() => cancel()">Back</button><br/><br/>
+
     <div class="pagination">
         <button class="btn btn-custom" @onclick=@(async ()=>await NavigateToPage("previous"))>Prev</button>
 
@@ -86,6 +91,11 @@ else
 
 
 @code {
+    void cancel()
+    {
+        navigationManager.NavigateTo("/postlist");
+    }
+
     private string searchTerm;
     private string SearchTerm
     {
