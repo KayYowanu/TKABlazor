@@ -23,7 +23,6 @@
     </div>
 </div><br/>
 <button type="button" class="btn btn-primary float-right" @onclick="() => CreateComment()">Save Comment</button>
-<button type="button" class="btn btn-danger float-right" @onclick="() => cancel()">Cancel</button>
 
 <div class="comment-reply-section">
 
@@ -33,22 +32,24 @@
     }
     else
     {
+        <div class="comment-count text-muted">
+            <p>@commentModel.Count comments</p>
+        </div>
 
         @foreach (var tka in commentModel)
         {
-            <div class="comment-count text-muted">
-                <p>commentModel.Count comments</p>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">@tka.Comment</h5>
-                    <p>
-                        <a class="btn btn-secondary float-right" Text="Read more" href='/postDetails/@tka.PostId'>Reply</a>
-                    </p>
-                </div>
-                }
 
-                }
-            </div>
+<div class="card-body">
+    <p>@tka.Username on <small class="card-title  text-muted">@tka.CreatedOn</small></p>
+    <h5 class="card-title">@tka.Comment</h5>
+    <p>
+        <a class="btn btn-secondary float-right" Text="Read more" href='/postDetails/@tka.PostId'>Reply</a>
+    </p>
+</div>
+        }
+
+    }
+</div>
 <button type="button" class="btn btn-danger" @onclick="() => cancel()">Back</button>
 
 @code {
