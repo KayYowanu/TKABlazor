@@ -106,6 +106,12 @@ namespace TKABlazor.Concrete
                 ($"SELECT * FROM [TKAComments]  ", null, commandType: CommandType.Text));
             return comments;
         }
+        public Task<List<TKAComments>> ListAllComments(int Id)
+        {
+            var comments = Task.FromResult(_postrepo.GetAllComments<TKAComments>
+                ($"SELECT * FROM [TKAComments] where PostId = {Id}", null, commandType: CommandType.Text));
+            return comments;
+        }
 
         public Task<int> UpdateComment(TKAComments tkacomment)
         {

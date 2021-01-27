@@ -62,7 +62,7 @@
     protected override async Task OnInitializedAsync()
     {
         postEntity = await postService.GetPostById(Convert.ToInt32(PostId));
-        commentModel = await postService.ListAllComments();
+        commentModel = await postService.ListAllComments(Convert.ToInt32(PostId));
     }
 
     /*for retrieving comments*/
@@ -75,13 +75,13 @@
     protected async Task CreateComment()
     {
         await postService.CreateComment(tkaposts, postEntity);
-        navigationManager.NavigateTo("/myposts");
+        navigationManager.NavigateTo("/postlist");
     }
 
 
 
     void cancel()
     {
-        navigationManager.NavigateTo("/myposts");
+        navigationManager.NavigateTo("/postlist");
     }
 }
